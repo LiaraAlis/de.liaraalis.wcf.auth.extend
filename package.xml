@@ -4,12 +4,12 @@
 		<packagename>Extended Auth Options</packagename>
 		<packagedescription>Extended Auth Options</packagedescription>
 		<version>1.0.0 RC 1</version>
-		<date>2014-01-10</date>
+		<date>2014-01-15</date>
 	</packageinformation>
 	
 	<authorinformation>
-		<author>Stricted</author>
-		<authorurl>http://tims.bastelstu.be/</authorurl>
+		<author>Alexander Pankow</author>
+		<authorurl>http://www.alexander-pankow.de/</authorurl>
 	</authorinformation>
 	
 	<requiredpackages>
@@ -21,6 +21,5 @@
 		<instruction type="eventListener">eventlistener.xml</instruction>
 		<instruction type="option">options.xml</instruction>
 		<instruction type="language">language/*.xml</instruction>
-		<instruction type="script">acp/install_extendet_auth_1.0.0_rc_1.php</instruction>
 	</instructions>
 </package>

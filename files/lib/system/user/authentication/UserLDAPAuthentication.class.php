@@ -17,10 +17,10 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
- * @author      Jan Altensen (Stricted)
- * @copyright   2013-2014 Jan Altensen (Stricted)
+ * @author      Jan Altensen (Stricted) / Alexander Pankow (LiaraAlis)
+ * @copyright   2013-2014 Jan Altensen (Stricted) / 2014 Alexander Pankow (LiaraAlis)
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package     be.bastelstu.jan.wcf.auth.extendet
+ * @package     de.liaraalis.wcf.auth.extended
  * @category    Community Framework
  */
 class UserLDAPAuthentication extends UserAbstractAuthentication {
