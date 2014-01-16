@@ -51,11 +51,11 @@ class UserAbstractAuthentication extends DefaultUserAuthentication {
 	/**
 	 * Checks the given user data.
 	 *
-	 * @param	string		$username
+	 * @param	string		$loginName
 	 * @param 	string		$password
 	 * @return	boolean
 	 */
-	protected function login($username, $password) {
+	protected function login($loginName, $password) {
 		return false;
 	}
 

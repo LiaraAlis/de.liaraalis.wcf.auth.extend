@@ -28,25 +28,25 @@ class UserIMAPAuthentication extends UserAbstractAuthentication {
 	/**
 	 * Checks the given user data.
 	 *
-	 * @param	string		$username
+	 * @param	string		$loginName
 	 * @param 	string		$password
 	 * @return	boolean
 	 */
-	protected function login ($username, $password) {
+	protected function login ($loginName, $password) {
 		if(!extension_loaded("imap")) {
 			throw new SystemException("Can not find IMAP extension.");
 		}
-		if($this->isValidEmail($username)) {
+		if($this->isValidEmail($loginName)) {
 			$options = '{'.AUTH_TYPE_IMAP_HOST.':'.AUTH_TYPE_IMAP_PORT.AUTH_TYPE_IMAP_BASEOPTIONS.'}';
-			$conn = @imap_open($options, $username, $password, OP_HALFOPEN);
+			$conn = @imap_open($options, $loginName, $password, OP_HALFOPEN);
 			if($conn) {
-				$this->email = $username;
+				$this->email = $loginName;
 				@imap_close($conn);
 				return true;
 			}
 			@imap_close($conn);
 			if(AUTH_CHECK_WCF) {
-				return $this->checkWCFUser($username, $password);
+				return $this->checkWCFUser($loginName, $password);
 			}
 		}
 		return false;

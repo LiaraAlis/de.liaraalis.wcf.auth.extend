@@ -28,41 +28,56 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 	/**
 	 * Checks the given user data.
 	 *
-	 * @param	string		$username
+	 * @param	string		$loginName
 	 * @param 	string		$password
 	 * @return	boolean
 	 */
-	protected function login ($username, $password) {
+	protected function login ($loginName, $password) {
 		$ldap = new LDAPUtil();
+
+		$host = AUTH_TYPE_LDAP_SERVER;
+		$port = AUTH_TYPE_LDAP_SERVER_PORT;
+		$baseDN = AUTH_TYPE_LDAP_SERVER_DN;
+
+		if(strpos($host, '://') !== false) {
+			// ldap_connect ignores port parameter when URLs are passed
+			$host .= ':' . $port;
+		}
+
 		// connect
-		$connect = $ldap->connect(AUTH_TYPE_LDAP_SERVER, AUTH_TYPE_LDAP_SERVER_PORT, AUTH_TYPE_LDAP_SERVER_DN);
+		$connect = $ldap->connect($host, $port, $baseDN);
 		if ($connect) {
+			$uidField = AUTH_TYPE_LDAP_FIELDS_LOGINNAME;
+			$wcfUsernameField = AUTH_TYPE_LDAP_FIELDS_USERNAME;
+			$mailField = AUTH_TYPE_LDAP_FIELDS_MAIL;
+
 			// find user
-			if ($ldap->bind($username, $password)) {
+			if ($ldap->bind($loginName, $password)) {
 				// try to find user email
-				if (($search = $ldap->search('uid='.$username))) {
+				if (($search = $ldap->search($uidField . '=' . $loginName))) {
 					$results = $ldap->get_entries($search);
-					if (isset($results[0]['mail'][0])) {
-						$this->email = $results[0]['mail'][0];
+					if (isset($results[0][$mailField][0])) {
+						$this->email = $results[0][$mailField][0];
 					}
 				}
 				
 				$ldap->close();
 				return true;
-			} elseif ($this->isValidEmail($username) && ($search = $ldap->search('mail='.$username))) {
+			} else if ($this->isValidEmail($loginName) && ($search = $ldap->search($mailField . '=' . $loginName))) {
 				$results = $ldap->get_entries($search);
-				if(isset($results[0]['uid'][0])) {
-					$this->username = $results[0]['uid'][0];
+				if(isset($results[0][$wcfUsernameField][0])) {
+					$this->username = $results[0][$wcfUsernameField][0];
 					$ldap->close($connect);
-					return $this->login($this->ldapusername, $password);
+					return $this->login($this->username, $password);
 				}
 			}
 		}
 		// no ldap user or connection -> check user from wcf
 		$ldap->close($connect);
-		if(AUTH_CHECK_WCF) {
-			return $this->checkWCFUser($username, $password);
-		}
+
+		if(AUTH_CHECK_WCF)
+			return $this->checkWCFUser($loginName, $password);
+
 		return false;
 	}
 }
