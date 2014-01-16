@@ -28,18 +28,18 @@ class UserDBAuthentication extends UserAbstractAuthentication {
 	/**
 	 * Checks the given user data.
 	 *
-	 * @param	string		$username
+	 * @param	string		$loginName
 	 * @param 	string		$password
 	 * @return	boolean
 	 */
-	protected function login ($username, $password) {
+	protected function login ($loginName, $password) {
 		$className = 'wcf\system\database\\'.AUTH_DB_TYPE.'Database';
 		$db = new $className(AUTH_DB_HOST, AUTH_DB_USER, AUTH_DB_PASSWORD, AUTH_DB_NAME, AUTH_DB_PORT);
 		if(AUTH_DB_HASH_METHOD != "plain") {
 			$hashmethod = AUTH_DB_HASH_METHOD;
 			$hashedpw = $hashmethod($password);
 		} else { $hashedpw = $password; }
-		if($this->isValidEmail($username)) {
+		if($this->isValidEmail($loginName)) {
 			$sql = "SELECT	".AUTH_DB_FIELDNAME_USER.", ".AUTH_DB_FIELDNAME_EMAIL."
 				FROM	".AUTH_DB_TABLENAME."
 				WHERE	".AUTH_DB_FIELDNAME_EMAIL." = ':user'
@@ -51,17 +51,17 @@ class UserDBAuthentication extends UserAbstractAuthentication {
 				AND		".AUTH_DB_FIELDNAME_PASSWORD." = ':password'";
 		}
 		$statement = $db->prepareStatement($sql);
-		$statement->execute(array(":user" => $username, ":password" => $hashedpw));
+		$statement->execute(array(":user" => $loginName, ":password" => $hashedpw));
 		$row = $statement->fetchArray();
 		if (!empty($row[AUTH_DB_FIELDNAME_USER]) && !empty($row[AUTH_DB_FIELDNAME_EMAIL])) {
 				$this->email = $row[AUTH_DB_FIELDNAME_EMAIL];
-				if($this->isValidEmail($username)) {
+				if($this->isValidEmail($loginName)) {
 					$this->username = $row[AUTH_DB_FIELDNAME_USER];
 				}
 				return true;
 		}
 		if(AUTH_CHECK_WCF) {
-			return $this->checkWCFUser($username, $password);
+			return $this->checkWCFUser($loginName, $password);
 		}
 		return false;
 	}
