@@ -12,12 +12,6 @@
 			<category name="general.auth.ldap">
 				<parent>general.auth</parent>
 			</category>
-			<category name="general.auth.ldap.server">
-				<parent>general.auth.ldap</parent>
-			</category>
-			<category name="general.auth.ldap.fields">
-				<parent>general.auth.ldap</parent>
-			</category>
 			<category name="general.auth.db">
 				<parent>general.auth</parent>
 			</category>
@@ -118,32 +112,32 @@ crc32]]></selectoptions>
 				<defaultvalue><![CDATA[ldap://example.com/]]></defaultvalue>
 			</option>
 			<option name="auth_type_ldap_server_port">
-				<categoryname>general.auth.ldap.server</categoryname>
+				<categoryname>general.auth.ldap</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue><![CDATA[389]]></defaultvalue>
 			</option>
 			<option name="auth_type_ldap_server_dn">
-				<categoryname>general.auth.ldap.server</categoryname>
+				<categoryname>general.auth.ldap</categoryname>
 				<optiontype>text</optiontype>
 				<defaultvalue><![CDATA[ou=user,dc=example,dc=com]]></defaultvalue>
 			</option>
 			<option name="auth_type_ldap_fields_username">
-				<categoryname>general.auth.ldap.fields</categoryname>
+				<categoryname>general.auth.ldap</categoryname>
 				<optiontype>text</optiontype>
 				<defaultvalue><![CDATA[uid]]></defaultvalue>
 			</option>
 			<option name="auth_type_ldap_fields_loginName">
-				<categoryname>general.auth.ldap.fields</categoryname>
+				<categoryname>general.auth.ldap</categoryname>
 				<optiontype>text</optiontype>
 				<defaultvalue><![CDATA[uid]]></defaultvalue>
 			</option>
 			<option name="auth_type_ldap_fields_realName">
-				<categoryname>general.auth.ldap.fields</categoryname>
+				<categoryname>general.auth.ldap</categoryname>
 				<optiontype>text</optiontype>
 				<defaultvalue><![CDATA[cn]]></defaultvalue>
 			</option>
 			<option name="auth_type_ldap_fields_mail">
-				<categoryname>general.auth.ldap.fields</categoryname>
+				<categoryname>general.auth.ldap</categoryname>
 				<optiontype>text</optiontype>
 				<defaultvalue><![CDATA[mail]]></defaultvalue>
 			</option>
