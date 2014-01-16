@@ -38,12 +38,19 @@
 		<item name="wcf.acp.option.auth_db_fieldname_email"><![CDATA[Database column name for e-mail address]]></item>
 		<item name="wcf.acp.option.auth_db_fieldname_email.description"><![CDATA[(optional)]]></item>
 		<!-- LDAP AUTH -->
-		<item name="wcf.acp.option.auth_type_ldap_server"><![CDATA[LDAP address]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_server"><![CDATA[LDAP host]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_server.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_server_port"><![CDATA[LDAP port]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_server_port.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_server_dn"><![CDATA[LDAP DN]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_server_dn.description"><![CDATA[]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_username"><![CDATA[Field name for username]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_username.description"><![CDATA[]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_loginName"><![CDATA[Field name for login name]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_loginName.description"><![CDATA[]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_mail"><![CDATA[Field name for mail]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_mail.description"><![CDATA[]]></item>
+
 		<!-- IMAP AUTH -->
 		<item name="wcf.acp.option.auth_type_imap_host"><![CDATA[IMAP address]]></item>
 		<item name="wcf.acp.option.auth_type_imap_host.description"><![CDATA[]]></item>

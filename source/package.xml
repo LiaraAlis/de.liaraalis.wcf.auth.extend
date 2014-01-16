@@ -4,18 +4,18 @@
 		<packagename>Extended Auth Options</packagename>
 		<packagedescription>Extended Auth Options</packagedescription>
 		<version>1.0.0</version>
-		<date>2014-01-15</date>
+		<date>2014-01-16</date>
 	</packageinformation>
-	
+
 	<authorinformation>
 		<author>Alexander Pankow</author>
 		<authorurl>http://www.alexander-pankow.de/</authorurl>
 	</authorinformation>
-	
+
 	<requiredpackages>
 		<requiredpackage minversion="2.0.0 ">com.woltlab.wcf</requiredpackage>
 	</requiredpackages>
-	
+
 	<instructions type="install">
 		<instruction type="file">files.tar</instruction>
 		<instruction type="eventListener">eventlistener.xml</instruction>

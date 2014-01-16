@@ -14,7 +14,7 @@ class LDAPUtil {
 	/**
 	 * LDAP resource id
 	 */
-	protected $ldap = Null;	
+	protected $ldap = null;
 	
 	/**
 	 * LDAP DN
@@ -39,6 +39,11 @@ class LDAPUtil {
 	 * @return	bool	true/false
 	 */
 	public function connect ($server, $port, $dn) {
+		if(strpos($server, '://') !== false) {
+			// ldap_connect ignores port parameter when URLs are passed
+			$server .= ':' . $port;
+		}
+
 		$this->ldap = @ldap_connect($server, $port);
 		$this->dn = $dn;
 		if($this->ldap) {
@@ -52,12 +57,12 @@ class LDAPUtil {
 	/**
 	 *	returns ldap user array
 	 *
-	 *	@param	string	$user
-	 *	@param	string	$password
+	 *	@param	string	$bindDN
+	 *	@param	string	$bindPW
 	 *	@return	array
 	 */
-	public function bind ($user, $password) {
-		return @ldap_bind($this->ldap, "uid=".$user.",".$this->dn, $password);
+	public function bind ($bindDN, $bindPW) {
+		return @ldap_bind($this->ldap, $bindDN, $bindPW);
 	}
 	
 	/**

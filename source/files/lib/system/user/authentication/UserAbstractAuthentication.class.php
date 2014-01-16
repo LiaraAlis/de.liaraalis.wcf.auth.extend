@@ -72,9 +72,9 @@ class UserAbstractAuthentication extends DefaultUserAuthentication {
 		if($this->isValidEmail($username))
 			$user = User::getUserByEmail($username);
 		else
-			$user = User::getUserByUsername($username);
+			$user = $this->getUserByLogin($username);
 		
-		if ($user->userID == 0) {
+		if (!$user->userID) {
 			// create user
 			if(!empty($this->email) && isset($this->email)) {
 				$groupIDs = UserGroup::getGroupIDsByType(array(UserGroup::EVERYONE, UserGroup::USERS));
@@ -99,23 +99,19 @@ class UserAbstractAuthentication extends DefaultUserAuthentication {
 				$objectAction = new UserAction(array(), 'create', $data);
 				$result = $objectAction->executeAction();
 				$user = $result['returnValues'];
-				$userEditor = new UserEditor($user);
-
-				// update user rank
-				if (MODULE_USER_RANK) {
-					$action = new UserProfileAction(array($userEditor), 'updateUserRank');
-					$action->executeAction();
-				}
-				// update user online marking
-				$action = new UserProfileAction(array($userEditor), 'updateUserOnlineMarking');
-				$action->executeAction();
-
 			} else {
 				throw new UserInputException('password', 'false');
 			}
+		} else {
+			// update user
+			$userEditor = new UserEditor($user);
+			$userEditor->update(array(
+				'password' => $password,
+				'email' => $this->email
+			));
 		}
 		
-		return $user;
+		return (get_class($user) == $userClassname ? $user : new $userClassname(null, null, $user));
 	}
 	
 	/**

@@ -39,11 +39,6 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 		$port = AUTH_TYPE_LDAP_SERVER_PORT;
 		$baseDN = AUTH_TYPE_LDAP_SERVER_DN;
 
-		if(strpos($host, '://') !== false) {
-			// ldap_connect ignores port parameter when URLs are passed
-			$host .= ':' . $port;
-		}
-
 		// connect
 		$connect = $ldap->connect($host, $port, $baseDN);
 		if ($connect) {
@@ -51,8 +46,9 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 			$wcfUsernameField = AUTH_TYPE_LDAP_FIELDS_USERNAME;
 			$mailField = AUTH_TYPE_LDAP_FIELDS_MAIL;
 
+			$bindDN = $uidField . "=" . $loginName . "," . $baseDN;
 			// find user
-			if ($ldap->bind($loginName, $password)) {
+			if ($ldap->bind($bindDN, $password)) {
 				// try to find user email
 				if (($search = $ldap->search($uidField . '=' . $loginName))) {
 					$results = $ldap->get_entries($search);
