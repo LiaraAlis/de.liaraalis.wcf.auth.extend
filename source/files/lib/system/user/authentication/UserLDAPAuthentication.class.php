@@ -52,6 +52,12 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 				// try to find user email
 				if (($search = $ldap->search($uidField . '=' . $loginName))) {
 					$results = $ldap->get_entries($search);
+					// set different username
+					if (!empty($wcfUsernameField) && isset($results[0][$wcfUsernameField][0])) {
+						$this->username = $results[0][$wcfUsernameField][0];
+					}
+
+					// set mail address
 					if (isset($results[0][$mailField][0])) {
 						$this->email = $results[0][$mailField][0];
 					}
