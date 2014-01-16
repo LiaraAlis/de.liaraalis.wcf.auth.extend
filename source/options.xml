@@ -107,7 +107,7 @@ crc32]]></selectoptions>
 			
 			<!-- ldap -->
 			<option name="auth_type_ldap_server">
-				<categoryname>general.auth.ldap.server</categoryname>
+				<categoryname>general.auth.ldap</categoryname>
 				<optiontype>text</optiontype>
 				<defaultvalue><![CDATA[ldap://example.com/]]></defaultvalue>
 			</option>
