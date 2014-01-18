@@ -39,6 +39,9 @@ class LDAPUtil {
 	 * @return	bool	true/false
 	 */
 	public function connect ($server, $port, $dn) {
+		if (empty($host) || empty($port) || empty($dn))
+			return false;
+
 		if(strpos($server, '://') !== false) {
 			// ldap_connect ignores port parameter when URLs are passed
 			$server .= ':' . $port;
@@ -51,6 +54,7 @@ class LDAPUtil {
 			ldap_set_option($this->ldap, LDAP_OPT_REFERRALS, 0);
 			return true;
 		}
+
 		return false;
 	}
 	
