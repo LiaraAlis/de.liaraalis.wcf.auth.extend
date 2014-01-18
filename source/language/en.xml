@@ -50,6 +50,12 @@
 		<item name="wcf.acp.option.auth_type_ldap_fields_loginName.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_fields_mail"><![CDATA[Field name for mail]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_fields_mail.description"><![CDATA[]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_anonymousBind"><![CDATA[Anonymous bind]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_mail.description"><![CDATA[]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_bindDN"><![CDATA[Bind-DN]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_mail.description"><![CDATA[]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_bindPW"><![CDATA[Bind-Password]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_mail.description"><![CDATA[]]></item>
 
 		<!-- IMAP AUTH -->
 		<item name="wcf.acp.option.auth_type_imap_host"><![CDATA[IMAP address]]></item>

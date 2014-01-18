@@ -50,6 +50,12 @@
 		<item name="wcf.acp.option.auth_type_ldap_fields_loginName.description"><![CDATA[Der Wert in diesem Feld wird für den Login verwendet.]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_fields_mail"><![CDATA[Feldname für E-Mail]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_fields_mail.description"><![CDATA[Der Wert in diesem Feld wird für die E-Mail Adresse des Benutzers verwendet.]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_anonymousBind"><![CDATA[Anonymer Bind]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_mail.description"><![CDATA[Wenn aktiviert, wird sich anonym am LDAP Server angemeldet. Bei Servern, die anonyme Binds nicht zulassen, sind unten die Zugangsdaten einzutragen (wird für das Suchen von Benutzern für z.B. die Prüfung bei der Registrierung benötigt).]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_bindDN"><![CDATA[Bind-DN]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_mail.description"><![CDATA[Login-DN für den nicht-anonymen Bind]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_bindPW"><![CDATA[Bind-Passwort]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_fields_mail.description"><![CDATA[Passwort für nicht-anonymen Bind]]></item>
 		<!-- IMAP AUTH -->
 		<item name="wcf.acp.option.auth_type_imap_host"><![CDATA[IMAP-Adresse]]></item>
 		<item name="wcf.acp.option.auth_type_imap_host.description"><![CDATA[]]></item>
