@@ -46,7 +46,7 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 			$mailField = AUTH_TYPE_LDAP_FIELDS_MAIL;
 
 			// check if plugin is correctly configured, skip this step if not
-			if (!empty($uidField) && empty($mailField)) {
+			if (!empty($uidField) && !empty($mailField)) {
 				$bindDN = $uidField . "=" . $loginName . "," . $baseDN;
 				// find user
 				if ($ldap->bind($bindDN, $password)) {
