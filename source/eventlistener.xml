@@ -13,5 +13,11 @@
 			<environment>admin</environment>
 			<listenerclassname><![CDATA[wcf\system\event\listener\ExtendedUserAuthenticationListener]]></listenerclassname>
 		</eventlistener>
+		<eventlistener>
+			<eventclassname><![CDATA[wcf\form\UserAddForm]]></eventclassname>
+			<eventname>validate</eventname>
+			<environment>user</environment>
+			<listenerclassname><![CDATA[wcf\system\event\listener\ExtendedIsAvailableUsernameListener]]></listenerclassname>
+		</eventlistener>
 	</import>
 </data>

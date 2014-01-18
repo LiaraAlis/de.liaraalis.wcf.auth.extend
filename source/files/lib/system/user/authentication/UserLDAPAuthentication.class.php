@@ -1,20 +1,6 @@
 <?php
 namespace wcf\system\user\authentication;
-use wcf\data\user\group\UserGroup;
-use wcf\data\user\UserAction;
-use wcf\data\user\User;
-use wcf\data\user\UserEditor;
-use wcf\data\user\UserProfileAction;
-use wcf\system\exception\SystemException;
-use wcf\system\exception\UserInputException;
-use wcf\util\HeaderUtil;
-use wcf\util\PasswordUtil;
-use wcf\system\database\MySQLDatabase;
-use wcf\system\database\PostgreSQLDatabase;
 use wcf\util\LDAPUtil;
-use wcf\util\UserUtil;
-use wcf\system\language\LanguageFactory;
-use wcf\system\WCF;
 
 /**
  * @author      Jan Altensen (Stricted) / Alexander Pankow (LiaraAlis)
@@ -35,19 +21,15 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 	protected function login ($loginName, $password) {
 		$ldap = new LDAPUtil();
 
-		$host = AUTH_TYPE_LDAP_SERVER;
-		$port = AUTH_TYPE_LDAP_SERVER_PORT;
-		$baseDN = AUTH_TYPE_LDAP_SERVER_DN;
-
 		// connect
-		if ($connect = $ldap->connect($host, $port, $baseDN)) {
+		if ($ldap->connect(AUTH_TYPE_LDAP_SERVER, AUTH_TYPE_LDAP_SERVER_PORT, AUTH_TYPE_LDAP_SERVER_DN)) {
 			$uidField = AUTH_TYPE_LDAP_FIELDS_LOGINNAME;
 			$wcfUsernameField = AUTH_TYPE_LDAP_FIELDS_USERNAME;
 			$mailField = AUTH_TYPE_LDAP_FIELDS_MAIL;
 
 			// check if plugin is correctly configured, skip this step if not
 			if (!empty($uidField) && !empty($mailField)) {
-				$bindDN = $uidField . "=" . $loginName . "," . $baseDN;
+				$bindDN = $uidField . "=" . $loginName . "," . AUTH_TYPE_LDAP_SERVER_DN;
 				// find user
 				if ($ldap->bind($bindDN, $password)) {
 					// try to find user email
@@ -79,14 +61,14 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 						$results = $ldap->get_entries($search);
 						if (isset($results[0][$wcfUsernameField][0])) {
 							$this->username = $results[0][$wcfUsernameField][0];
-							$ldap->close($connect);
+							$ldap->close();
 							return $this->login($this->username, $password);
 						}
 					}
 				}
 			}
 
-			$ldap->close($connect);
+			$ldap->close();
 		}
 
 		// no ldap user or connection -> check user from wcf
