@@ -14,7 +14,7 @@
 			<listenerclassname><![CDATA[wcf\system\event\listener\ExtendedUserAuthenticationListener]]></listenerclassname>
 		</eventlistener>
 		<eventlistener>
-			<eventclassname><![CDATA[wcf\form\UserAddForm]]></eventclassname>
+			<eventclassname><![CDATA[wcf\form\RegisterForm]]></eventclassname>
 			<eventname>validate</eventname>
 			<environment>user</environment>
 			<listenerclassname><![CDATA[wcf\system\event\listener\ExtendedIsAvailableUsernameListener]]></listenerclassname>
