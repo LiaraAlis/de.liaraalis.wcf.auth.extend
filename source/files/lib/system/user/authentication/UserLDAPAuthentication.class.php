@@ -46,31 +46,44 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 			$wcfUsernameField = AUTH_TYPE_LDAP_FIELDS_USERNAME;
 			$mailField = AUTH_TYPE_LDAP_FIELDS_MAIL;
 
-			$bindDN = $uidField . "=" . $loginName . "," . $baseDN;
-			// find user
-			if ($ldap->bind($bindDN, $password)) {
-				// try to find user email
-				if (($search = $ldap->search($uidField . '=' . $loginName))) {
-					$results = $ldap->get_entries($search);
-					// set different username
-					if (!empty($wcfUsernameField) && isset($results[0][$wcfUsernameField][0])) {
-						$this->username = $results[0][$wcfUsernameField][0];
+			// check if plugin is correctly configured, skip this step if not
+			if (!empty($uidField) && empty($mailField)) {
+				$bindDN = $uidField . "=" . $loginName . "," . $baseDN;
+				// find user
+				if ($ldap->bind($bindDN, $password)) {
+					// try to find user email
+					if (($search = $ldap->search($uidField . '=' . $loginName))) {
+						$results = $ldap->get_entries($search);
+						// set different username
+						if (!empty($wcfUsernameField) && isset($results[0][$wcfUsernameField][0])) {
+							$this->username = $results[0][$wcfUsernameField][0];
+						}
+
+						// set mail address
+						if (isset($results[0][$mailField][0])) {
+							$this->email = $results[0][$mailField][0];
+						}
 					}
 
-					// set mail address
-					if (isset($results[0][$mailField][0])) {
-						$this->email = $results[0][$mailField][0];
+					$ldap->close();
+					return true;
+				} else {
+					// bind as admin if configured, otherwise anonymous bind
+					if (!AUTH_TYPE_LDAP_FIELDS_ANONYMOUSBIND) {
+						$bind = $ldap->bind(AUTH_TYPE_LDAP_FIELDS_BINDDN, AUTH_TYPE_LDAP_FIELDS_BINDPW);
+					} else {
+						$bind = $ldap->bind();
 					}
-				}
-				
-				$ldap->close();
-				return true;
-			} else if ($this->isValidEmail($loginName) && ($search = $ldap->search($mailField . '=' . $loginName))) {
-				$results = $ldap->get_entries($search);
-				if(isset($results[0][$wcfUsernameField][0])) {
-					$this->username = $results[0][$wcfUsernameField][0];
-					$ldap->close($connect);
-					return $this->login($this->username, $password);
+
+					// search user by e-mail address
+					if ($bind && ($this->isValidEmail($loginName) && ($search = $ldap->search($mailField . '=' . $loginName)))) {
+						$results = $ldap->get_entries($search);
+						if (isset($results[0][$wcfUsernameField][0])) {
+							$this->username = $results[0][$wcfUsernameField][0];
+							$ldap->close($connect);
+							return $this->login($this->username, $password);
+						}
+					}
 				}
 			}
 		}
