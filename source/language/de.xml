@@ -39,7 +39,7 @@
 		<item name="wcf.acp.option.auth_db_fieldname_email.description"><![CDATA[]]></item>
 		<!-- LDAP AUTH -->
 		<item name="wcf.acp.option.auth_type_ldap_server"><![CDATA[LDAP-Host]]></item>
-		<item name="wcf.acp.option.auth_type_ldap_server.description"><![CDATA[URI des LDAP-Servers ohne Port Angabe (wird automatisch dran gehängt) und bitte auch ohne abschließenden Slash (/).]]></item>
+		<item name="wcf.acp.option.auth_type_ldap_server.description"><![CDATA[URI des LDAP-Servers ohne Port Angabe (wird automatisch angehängt) und bitte auch ohne abschließenden Slash (/).]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_server_port"><![CDATA[LDAP-Port]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_server_port.description"><![CDATA[Port des LDAP-Servers (LDAP Standard: 389, LDAPS Standard: 636).]]></item>
 		<item name="wcf.acp.option.auth_type_ldap_server_dn"><![CDATA[LDAP-DN]]></item>
