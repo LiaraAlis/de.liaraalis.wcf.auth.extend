@@ -86,10 +86,10 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 				}
 			}
 
-			// no ldap user or connection -> check user from wcf
 			$ldap->close($connect);
 		}
 
+		// no ldap user or connection -> check user from wcf
 		if(AUTH_CHECK_WCF)
 			return $this->checkWCFUser($loginName, $password);
 
