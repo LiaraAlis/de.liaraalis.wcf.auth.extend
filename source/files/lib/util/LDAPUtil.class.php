@@ -39,7 +39,7 @@ class LDAPUtil {
 	 * @return	bool	true/false
 	 */
 	public function connect ($server, $port, $dn) {
-		if (empty($host) || empty($port) || empty($dn))
+		if (empty($server) || empty($port) || empty($dn))
 			return false;
 
 		if(strpos($server, '://') !== false) {
