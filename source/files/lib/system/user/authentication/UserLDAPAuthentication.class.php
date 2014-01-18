@@ -40,8 +40,7 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 		$baseDN = AUTH_TYPE_LDAP_SERVER_DN;
 
 		// connect
-		$connect = $ldap->connect($host, $port, $baseDN);
-		if ($connect) {
+		if ($connect = $ldap->connect($host, $port, $baseDN)) {
 			$uidField = AUTH_TYPE_LDAP_FIELDS_LOGINNAME;
 			$wcfUsernameField = AUTH_TYPE_LDAP_FIELDS_USERNAME;
 			$mailField = AUTH_TYPE_LDAP_FIELDS_MAIL;
@@ -86,9 +85,10 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 					}
 				}
 			}
+
+			// no ldap user or connection -> check user from wcf
+			$ldap->close($connect);
 		}
-		// no ldap user or connection -> check user from wcf
-		$ldap->close($connect);
 
 		if(AUTH_CHECK_WCF)
 			return $this->checkWCFUser($loginName, $password);
