@@ -65,8 +65,15 @@ class LDAPUtil {
 	 *	@param	string	$bindPW
 	 *	@return	array
 	 */
-	public function bind ($bindDN, $bindPW) {
-		return @ldap_bind($this->ldap, $bindDN, $bindPW);
+	public function bind ($bindDN = null, $bindPW = null) {
+		if ($bindDN === null || $bindPW = null) {
+			// anonymous bind
+			$bind = @ldap_bind($this->ldap);
+		} else {
+			$bind = @ldap_bind($this->ldap, $bindDN, $bindPW);
+		}
+
+		return $bind;
 	}
 	
 	/**
