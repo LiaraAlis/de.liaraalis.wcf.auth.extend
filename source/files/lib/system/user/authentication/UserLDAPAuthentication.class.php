@@ -58,13 +58,22 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 						$bind = $ldap->bind();
 					}
 
-					// search user by e-mail address
-					if ($bind && ($this->isValidEmail($loginName) && ($search = $ldap->search($mailField . '=' . $loginName)))) {
-						$results = $ldap->get_entries($search);
-						if (isset($results[0][$wcfUsernameField][0])) {
-							$this->username = $results[0][$wcfUsernameField][0];
-							$ldap->close();
-							return $this->login($this->username, $password);
+					if ($bind) {
+						$search = false;
+						if ($this->isValidEmail($loginName)) {
+							// search user by e-mail address
+							$search = $ldap->search($mailField . '=' . $loginName);
+						} else if (!empty($wcfUsernameField)) {
+							// search user by wcf username
+							$search = $ldap->search($wcfUsernameField . '=' . $loginName);
+						}
+
+						if ($search && ($results = $ldap->get_entries($search))) {
+							if (isset($results[0][$uidField][0])) {
+								$this->username = $results[0][$uidField][0];
+								$ldap->close();
+								return $this->login($this->username, $password);
+							}
 						}
 					}
 				}
