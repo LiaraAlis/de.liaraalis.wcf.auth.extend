@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\user\authentication;
 use wcf\util\LDAPUtil;
+use wcf\data\user\User;
+use wcf\util\HeaderUtil;
 
 /**
  * @author      Jan Altensen (Stricted) / Alexander Pankow (LiaraAlis)
@@ -23,9 +25,9 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 
 		// connect
 		if ($ldap->connect(AUTH_TYPE_LDAP_SERVER, AUTH_TYPE_LDAP_SERVER_PORT, AUTH_TYPE_LDAP_SERVER_DN)) {
-			$uidField = AUTH_TYPE_LDAP_FIELDS_LOGINNAME;
-			$wcfUsernameField = AUTH_TYPE_LDAP_FIELDS_USERNAME;
-			$mailField = AUTH_TYPE_LDAP_FIELDS_MAIL;
+			$uidField = strtolower(AUTH_TYPE_LDAP_FIELDS_LOGINNAME);
+			$wcfUsernameField = strtolower(AUTH_TYPE_LDAP_FIELDS_USERNAME);
+			$mailField = strtolower(AUTH_TYPE_LDAP_FIELDS_MAIL);
 
 			// check if plugin is correctly configured, skip this step if not
 			if (!empty($uidField) && !empty($mailField)) {
@@ -76,6 +78,28 @@ class UserLDAPAuthentication extends UserAbstractAuthentication {
 			return $this->checkWCFUser($loginName, $password);
 
 		return false;
+	}
+
+	/**
+	 * @see	\wcf\system\user\authentication\IUserAuthentication::supportsPersistentLogins()
+	 */
+	public function supportsPersistentLogins() {
+		return true;
+	}
+
+	/**
+	 * @see	\wcf\system\user\authentication\IUserAuthentication::storeAccessData()
+	 */
+	public function storeAccessData(User $user, $username, $password) {
+		HeaderUtil::setCookie('userID', $user->userID, TIME_NOW + 365 * 24 * 3600);
+		HeaderUtil::setCookie('password', $password, TIME_NOW + 365 * 24 * 3600);
+	}
+
+	/**
+	 * @see	\wcf\system\user\authentication\DefaultUserAuthentication::checkCookiePassword()
+	 */
+	protected function checkCookiePassword($user, $password) {
+		return $this->login($user->username, $password);
 	}
 }
 ?>

@@ -105,6 +105,8 @@ class UserAbstractAuthentication extends DefaultUserAuthentication {
 		} else {
 			// update user
 			$userEditor = new UserEditor($user);
+			if (empty($this->email))
+				$this->email = $userEditor->email;
 			$userEditor->update(array(
 				'password' => $password,
 				'email' => $this->email
